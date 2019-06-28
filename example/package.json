@@ -1,0 +1,14 @@
+{
+  "name": "expressjs-ip-control-example",
+  "version": "0.0.0",
+  "main": "index.js",
+  "author": "Tycho van Berge Henegouwen",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "expressjs-ip-control": "link:.."
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
