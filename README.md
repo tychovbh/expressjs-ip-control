@@ -60,9 +60,6 @@ app.get('/', ipControl({
 
 ```
 
-You can now add ipControl without settings:
-
-
 ## License
 
 MIT © [tychovbh](https://github.com/tychovbh)
