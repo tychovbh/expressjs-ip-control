@@ -1,6 +1,6 @@
 {
   "name": "expressjs-ip-control",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "IP white or blacklisting for Expressjs",
   "main": "src/index.js",
   "repository": "https://github.com/tychovbh/expressjs-ip-control",

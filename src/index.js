@@ -1,29 +1,24 @@
 require('dotenv').config()
 
-let defaultSettings = {
-    whitelist: process.env.EXPRESSJS_IP_WHITELIST || ''
-}
+const ipControl = (settings = {}) => {
+    let whitelist = process.env.EXPRESSJS_IP_WHITELIST || ''
 
-let settings = {}
-
-const ipCheck = (req, res, next) => {
-    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
-
-    if (defaultSettings.whitelist.indexOf(ip) === -1 || settings.exception && !settings.exception(req, res, ip)) {
-        return settings.forbidden ? settings.forbidden(req, res, ip) : res.status(403).send('You do not have rights to visit this page')
+    if (settings.whitelist) {
+        whitelist = settings.whitelist
     }
 
-    return next();
-}
+    return (req, res, next) => {
+        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
 
-const ipControl = (options = {}) => {
-    settings = options
+        if (settings.exception && settings.exception()) {
+            return next()
+        }
 
-    if (options.whitelist) {
-        defaultSettings.whitelist = options.whitelist
+        if (whitelist.indexOf(ip) === -1) {
+            return settings.forbidden ? settings.forbidden(req, res, ip) : res.status(403).send('You do not have rights to visit this page')
+        }
+
+        return next();
     }
-
-
-    return ipCheck
 }
 module.exports = ipControl;
