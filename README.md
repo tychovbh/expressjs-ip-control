@@ -41,7 +41,7 @@ app.get('/', ipControl({
 
 ## Config
 
-Optionally you can create an .env file an add your whitelist:
+Optionally you can create a .env file an add your whitelist:
 
 ``
 EXPRESSJS_IP_WHITELIST="127.0.0.1, 192.168.10.10"
