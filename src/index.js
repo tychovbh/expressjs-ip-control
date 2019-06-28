@@ -16,11 +16,11 @@ const ipCheck = (req, res, next) => {
     return next();
 }
 
-const ipControl = (settings) => {
-    settings = settings
+const ipControl = (options = {}) => {
+    settings = options
 
-    if (settings.whitelist) {
-        defaultSettings.whitelist = settings.whitelist
+    if (options.whitelist) {
+        defaultSettings.whitelist = options.whitelist
     }
 
 
