@@ -23,11 +23,11 @@ const ipControl = (settings = {}) => {
             return next()
         }
 
-        if (blacklist.indexOf(ip) !== -1) {
+        if (blacklist && blacklist.indexOf(ip) !== -1) {
             return forbidden()
         }
 
-        if (whitelist.indexOf(ip) === -1) {
+        if (whitelist && whitelist.indexOf(ip) === -1) {
             return forbidden()
         }
 
