@@ -13,13 +13,18 @@ const ipControl = (settings = {}) => {
     }
 
     return (req, res, next) => {
-        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+        let ip = req.connection.remoteAddress
+
+        if (settings.x_forwarded_for || process.env.EXPRESSJS_IP_X_FORWARDED_FOR === 'true') {
+            ip = req.headers['x-forwarded-for']
+        }
+
 
         const forbidden = () => {
             return settings.forbidden ? settings.forbidden(req, res, ip) : res.status(403).send('You do not have rights to visit this page')
         }
 
-        if (settings.exception && settings.exception()) {
+        if (settings.exception && settings.exception(req, res, ip)) {
             return next()
         }
 

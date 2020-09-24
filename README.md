@@ -5,7 +5,7 @@
 [![NPM](https://img.shields.io/npm/v/expressjs-ip-control.svg)](https://www.npmjs.com/package/expressjs-ip-control) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 
-Expressjs package to whitelist IP addresses also support for x-forwarded-for ip addresses.
+Expressjs package to whitelist IP addresses also support for X-Forwarded-For ip addresses.
 
 ## Install
 
@@ -37,6 +37,16 @@ app.get('/', ipControl({
         return proccess.env.production !== 'production'
     }
 }), (req, res) => res.send('Hello World!'))
+
+// Enable IP check on X-Forwarded-For header.
+// Warning you should only use this if you are sure the X-Forwarded-For header cannot be set:
+// curl --header "X-Forwarded-For: 192.168.0.2" http://example.com
+// I used this in combination with Nginx port forwarding which always sets the X-Forwarded-For with the remote IP adres:
+// proxy_set_header X-Forwarded-For $remote_addr;
+app.get('/', ipControl({
+    x_forwarded_for: true,
+}), (req, res) => res.send('Hello World!'))
+
 ```
 
 ## Config
@@ -45,6 +55,7 @@ Optionally you can create a .env file an add your whitelist:
 
 ``
 EXPRESSJS_IP_WHITELIST="127.0.0.1, 192.168.10.10"
+EXPRESSJS_IP_X_FORWARDED_FOR=true
 ``
 
 ```jsx
